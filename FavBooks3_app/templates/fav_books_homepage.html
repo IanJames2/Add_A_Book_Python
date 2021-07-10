@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Books Homepage</title>
+</head>
+<body>
+    <h1>Welcome, {{ userid.first_name }}!</h1>
+    <a href="/user_leaves">Log Out</a>
+    <h2>Add A Book</h2>
+    
+    {% if messages %}
+    {% for message in messages %}
+    <p style="color:red;">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    <form action="added_book_to_site/" method="post">
+        {% csrf_token %}
+        <p>Title:<input type="text" name="title" id=""></p>
+        <p>Description: <textarea name="description" id="" cols="30" rows="10"></textarea></p>
+        <p>Time Displayed: {{ time }}</p>
+        <button type="submit">Add Book To The Site</button>
+    </form>
+    
+
+    <h2>All Books</h2>
+    
+        {% for Book in favbookslist %}
+        <div class="bookscodeblock">
+            <a href="/books/{{ Book.id }}">{{ Book.title }}</a>
+            <p>Added by: {{Book.uploaded_by.first_name}}</p>
+            <!-- <p>Time uploaded: {{ Book.uploadedTime }}</p>
+            <p>Last Updated Time: {{ Book.lastupdateTime }}</p> -->
+            <p>Description: {{Book.description}}</p>
+            <p><a href="/books/{{Book.id}}"><button>Book Details</button></a></p>
+            
+        </div>
+        {% endfor %}
+    
+</body>
+</html>

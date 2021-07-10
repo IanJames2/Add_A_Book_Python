@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fav Details</title>
+</head>
+<body>
+    <h1>Welcome, {{ userid.first_name }}</h1> 
+    <a href="/user_leaves">Click Here To Log Out</a>
+    <h2>{{ book_details.title }}</h2> <a href="/favbooks/{{book_details.id}}">Add Book To Favorites</a>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color:red;">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    <form action="/{{book_details.id}}" method="post">
+        {% csrf_token %}
+        <p>Added By: {{ book_details.uploaded_by.first_name }} {{ book_details.uploaded_by.last_name }}</p>
+        <p>Description: {{ book_details.description }}</p>
+        <p>{{ time }}</p>
+        {% if userid == book_details.uploaded_by %}
+        <p>Title Update: <input type="text" name="title" id=""></p> <!--Without this I got multidict error.-->
+        <p>Description: <textarea name="description" id="" cols="30" rows="10"></textarea></p>
+        <button type="submit">Update Your Book Details</button>
+        <a href="/{{book_details.id}}/delete">Delete</a>
+        {% endif %}
+    </form>
+
+    <a href="/books/goback">Back To Homepage</a>
+
+    <h2>Users who added this book to their favorites list</h2>
+    
+    <!-- { { book_details.users_who_favorited.all } } -->
+    <ul>
+    {% for User in book_details.users_who_favorited.all %}
+        <li>{{User.first_name}}</li>
+    {% endfor %}
+    </ul>
+
+    <a href="/remove_favbooks/{{book_details.id}}">Remove Book To Favorites</a>
+
+    
+     
+
+    <!-- <h2>Add A Book To Your Favorites List</h2> -->
+
+    <!-- <form action="/add_book_to_fav_list/{{ userid }}" method="POST">
+        {% csrf_token %}
+        <select name="book_id">
+            {%  for book in books %}
+            <option value="{{ book.id }}">{{ book.title }}</option>
+            {% endfor %}
+        </select>
+        <button>Add</button>
+    </form> -->
+
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+User.objects.create(first_name = "Aaron", last_name = "Russell", email = "Russell@gmail.com", password = "password")
+User.objects.create(first_name = "Bozo", last_name = "Soto", email = "Soto@gmail.com", password = "password")
+User.objects.create(first_name = "Shawn", last_name = "Ruben", email = "Ruben@gmail.com", password = "password")
+
+Add Many to Many Field Object
+Book.objects.create(title = "Using Linex", description = "Learn how to use Linex.", uploaded_by = User.objects.get(id=3))
+Book.objects.create(title = "Gray Hat Hacking", description = "Learn how to hack using Gray Hat tactics.", uploaded_by = User.objects.get(id=2))
+Book.objects.create(title = "Python For Dummies", description = "Learn the fundamentals of Python.", uploaded_by = User.objects.get(id=1))
+
+Add related name of many to many field relationship
+var0 = User.objects.get(id=1)
+var1 = Book.objects.get(id=1) 
+var0.readers.add(var1)  
+var2 = User.objects.get(id=2)
+var3 = Book.objects.get(id=2) 
+var4 = User.objects.get(id=3)
+var5 = Book.objects.get(id=3) 
+var6 = User.objects.get(id=4)
+var7 = Book.objects.get(id=4)
+var2.readers.add(var3)  
+var4.readers.add(var5)  
+var6.readers.add(var7)  
+var6.readers.add(var7)  
+var4.readers.add(var3)  
+var2.readers.add(var5)  
+var0.readers.add(var1)  
+
+var0.readers.remove(var1)
+
+
